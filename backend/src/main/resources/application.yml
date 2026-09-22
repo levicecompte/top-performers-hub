@@ -1,0 +1,37 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: top-performers-api
+  datasource:
+    url: ${SUPABASE_DB_URL}
+    username: ${SUPABASE_DB_USER}
+    password: ${SUPABASE_DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 5
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: false
+
+market:
+  api-key: ${MARKET_DATA_API_KEY:}
+  base-url: https://api.twelvedata.com
+
+cors:
+  allowed-origins: >-
+    http://localhost:8080,
+    http://localhost:5173,
+    http://localhost:3000,
+    https://*.lovable.app,
+    https://*.lovableproject.com
+
+logging:
+  level:
+    com.topperformers: INFO
