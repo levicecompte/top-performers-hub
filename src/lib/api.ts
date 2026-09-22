@@ -16,7 +16,7 @@ export type ActionEtf = {
 
 /** The frontend only ever talks to the Java backend, never to a database. */
 export const API_BASE_URL =
-  (import.meta.env.VITE_API_BASE_URL as string | undefined) ?? "http://localhost:8080";
+  (import.meta.env["VITE_API_BASE_URL"] as string | undefined) ?? "http://localhost:8080";
 
 async function getJson<T>(path: string): Promise<T> {
   const res = await fetch(`${API_BASE_URL}${path}`, {

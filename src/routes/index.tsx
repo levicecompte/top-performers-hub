@@ -172,7 +172,7 @@ function buildMarquee(rows: ActionEtf[]) {
   if (rows.length === 0) {
     return ["TOP 100 PERFORMERS MTD", "AWAITING BACKEND SNAPSHOT", "SOURCE: JAVA API"];
   }
-  const top = rows[0];
+  const top = rows[0]!;
   const avg = rows.reduce((sum, r) => sum + r.performancePct, 0) / rows.length;
   return [
     `TOP MOVER ${top.symbol} ${pct(top.performancePct)}`,
