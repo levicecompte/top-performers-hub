@@ -18,7 +18,13 @@
   <description>TOP 100 PERFORMERS MTD - RESTful API</description>
 
   <properties>
+    <!-- Bytecode target must stay within Spring Boot 3.3's supported range.
+         Building *on* JDK 27 is fine; emitting class file major 71 is not
+         (spring-boot-maven-plugin repackage → Unsupported class file major version 71). -->
     <java.version>21</java.version>
+    <!-- Boot 3.3.4's managed Lombok is too old for JDK 27's javac
+         (ExceptionInInitializerError: TypeTag :: UNKNOWN). 1.18.48+ adds JDK 27 support. -->
+    <lombok.version>1.18.48</lombok.version>
   </properties>
 
   <dependencies>
@@ -57,6 +63,21 @@
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <!-- Lombok must be on the processor path; JDK 22+ also skips
+               processors unless they are listed here explicitly. -->
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>${lombok.version}</version>
+            </path>
+          </annotationProcessorPaths>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
